@@ -22,10 +22,10 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
 
 Extension :
-codeception
-rbac
-adminLTE
-Facebook/webdriver
+<br>codeception
+<br>rbac
+<br>adminLTE
+<br>Facebook/webdriver
 
 Panduan menjalankan test acceptence :
 

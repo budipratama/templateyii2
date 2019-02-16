@@ -6,6 +6,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\components\Commons;
+use backend\models\EmailTemplate;
+
 
 /**
  * Site controller
@@ -76,6 +79,19 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $User = Commons::getInformationUser();
+            $EmailTemplate = EmailTemplate::findOne(1);
+            $body = $EmailTemplate->tet_body;
+            $browser = get_browser(null, true);
+            $ip = Commons::getClientIp();
+            $location = "Jakarta";
+            $body = str_replace("[FULLNAME]",$User->fullname,$body);
+            $body = str_replace("[IP]",$ip,$body);
+            $body = str_replace("[OS]",$browser['platform'],$body);
+            $body = str_replace("[BROWSER]",$browser['browser'],$body);
+            $body = str_replace("[LOCATION]",$location,$body);
+
+            Commons::sendMail([$User->email],$EmailTemplate->tet_subject,$body);
             return $this->goBack();
         } else {
             $model->password = '';

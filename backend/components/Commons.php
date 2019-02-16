@@ -2,7 +2,8 @@
 namespace backend\components;
 use Yii;
 use backend\models\ConfigurationWeb;
-use yii\base\InvalidConfigException;
+use common\models\User;
+
 
 class Commons
 {
@@ -61,5 +62,10 @@ class Commons
             ->setSubject($subject)
             ->setHtmlBody($body)
             ->send();
+    }
+
+    public static function getInformationUser(){
+        $user = User::findOne(Yii::$app->user->id);
+        return $user;
     }
 }

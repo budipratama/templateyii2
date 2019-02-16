@@ -17,6 +17,12 @@ return [
         ]
     ],
     'components' => [
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'enableSwiftMailerLogging' => true,
+        ],
+
         'authManager' => [
             'class' => 'yii\rbac\DbManager'
         ],
@@ -32,12 +38,16 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'authTimeout'=> 60000,
+            'autoRenewCookie'=> true,
+            'loginUrl' => ['site/login'],
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
+            'class' => 'yii\web\Session',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
