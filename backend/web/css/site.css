@@ -119,6 +119,6 @@ a.desc:after {
     outline: none;
 }
 
-#captcha-form{
-
-}
+#global-form{background: #3c8dbc;position: absolute;float:right;width:0;transition: 0.5s;height:100%;z-index: 9;overflow-x: hidden;right:0px}
+.content-image-loading{position: absolute;height: 100vh;width: 100%;}
+.img-loading{margin:0 auto; display:block;margin-top:140px;}

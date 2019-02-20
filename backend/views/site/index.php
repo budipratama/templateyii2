@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -110,7 +111,7 @@ $this->registerCssFile("@web/css/ionicons.min.css");
                 <div class="box-body chat" id="chat-box">
                     <!-- chat item -->
                     <div class="item">
-                        <img src="dist/img/user4-128x128.jpg" alt="user image" class="online">
+                        <?= Html::img('@web/images/adminLTE/user4-128x128.jpg', ['alt' => 'User Image','class' => 'online']) ?>
 
                         <p class="message">
                             <a href="#" class="name">
@@ -137,8 +138,7 @@ $this->registerCssFile("@web/css/ionicons.min.css");
                     <!-- /.item -->
                     <!-- chat item -->
                     <div class="item">
-                        <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
-
+                        <?= Html::img('@web/images/adminLTE/user3-128x128.jpg', ['alt' => 'User Image','class' => 'offline']) ?>
                         <p class="message">
                             <a href="#" class="name">
                                 <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
@@ -152,7 +152,7 @@ $this->registerCssFile("@web/css/ionicons.min.css");
                     <!-- /.item -->
                     <!-- chat item -->
                     <div class="item">
-                        <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
+                        <?= Html::img('@web/images/adminLTE/user2-160x160.jpg', ['alt' => 'User Image','class' => 'online']) ?>
 
                         <p class="message">
                             <a href="#" class="name">

@@ -68,4 +68,8 @@ class Commons
         $user = User::findOne(Yii::$app->user->id);
         return $user;
     }
+
+    public static function authorizeUser($url){
+
+    }
 }

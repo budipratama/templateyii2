@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "^2.1",
         "dmstr/yii2-adminlte-asset": "^2.1",
         "mdmsoft/yii2-admin": "~2.0",
-        "facebook/webdriver": "^1.6"
+        "facebook/webdriver": "^1.6",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-widget-select2": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
