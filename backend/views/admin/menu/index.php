@@ -1,19 +1,23 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
-//use mdm\admin\components\Helper;
+use backend\models\admin\Menu;
+use backend\models\admin\AuthItem;
+use mdm\admin\components\Helper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\admin\MenuSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Menus');
 $this->params['breadcrumbs'][] = $this->title;
+Helper::checkRoute('create');
 ?>
 <div class="menu-index">
-    <?php Pjax::begin(); ?>
+    <?php Pjax::begin(['id' => 'menu-grid']); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -22,15 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
         'headerRowOptions' => ['class' => 'kartik-sheet-style'],
         'filterRowOptions' => ['class' => 'kartik-sheet-style'],
-        'pjax' => true, // pjax is set to always true for this demo
+        'pjax' => true,
         'toolbar' =>  [
             [
-                'content' =>
+                'content' => (Helper::checkRoute('create'))?
                     Html::button('<i class="fas fa-plus"></i>', [
                         'class' => 'btn btn-success',
-                        'title' => 'Add Book',//Yii::t('kvgrid', 'Add Book'),
+                        'title' => 'Add Book',
                         'onclick' => 'showForm("'.Url::toRoute(['configurationweb/menu/create']).'")'
-                    ]),
+                    ]):'',
                 'options' => ['class' => 'btn-group mr-2']
             ],
         ],
@@ -39,20 +43,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'export' => [
             'fontAwesome' => true
         ],
-
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
             'heading' => $this->title,
         ],
         'persistResize' => false,
-        'toggleDataOptions' => ['minCount' => 10],
-//        'exportConfig' => $exportConfig,
-        'itemLabelSingle' => 'book',
-        'itemLabelPlural' => 'books',
+        'itemLabelSingle' => 'Menu',
+        'itemLabelPlural' => 'Menus',
         'columns' => [
             'name',
-            'parent',
-            'route',
+            [
+                'attribute' => 'parent',
+                'value' => function($model){
+                    return ($model->parent!="")?Menu::findOne($model->parent)->name:$model->parent;
+                },
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ArrayHelper::map(Menu::find()->all(),'name','name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => [
+                    'placeholder' => 'Parent',
+                ]
+            ],
+            [
+                'attribute' => 'route',
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ArrayHelper::map(AuthItem::find()->all(),'name','name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => [
+                    'placeholder' => 'Route',
+                ]
+            ],
+
             'order',
             //'data',
             'icon',
@@ -60,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Actions',
-//                    'template' => Helper::filterActionColumn('{view} {update} {delete}'),
+                    'template' => Helper::filterActionColumn('{view} {update} {delete}'),
                     'buttons' => [
                             'view' => function($url,$model,$key){
                                 return Html::a('<span class="glyphicon glyphicon-eye-open" title="View"></span>', "#",['onclick' => "showForm('$url')"]);
@@ -69,7 +94,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a('<span class="glyphicon glyphicon-pencil" title="Update"></span>', "#",['onclick' => "showForm('$url')"]);
                             },
                             'delete' => function($url,$model,$key){
-                                return Html::a('<span class="glyphicon glyphicon-trash" title="Delete"></span>', "#");
+                                return Html::a('<span class="glyphicon glyphicon-trash" title="Delete"></span>', ['delete', 'id' => $model->id], [
+                                    'data-confirm' => "Are you sure to delete this item {$model->name}?",
+                                    'data-method' => 'post',
+                                ]);
                             }
                     ]
             ],

@@ -1,5 +1,5 @@
 $(document).ajaxStart(function () {
-    Pace.restart()
+    // Pace.restart()
 });
 function loading(show){
     if (show === true){
@@ -20,7 +20,6 @@ function closeForm(){
     setTimeout(function () {
         dom.style.position = "absolute";
         mainContent(true);
-        //
     },500);
 }
 function submitConfiguration(ob) {
@@ -42,8 +41,7 @@ function mainContent(show){
     $(".breadcrumb").css("display",sh);
 }
 function showForm(url){
-    // $('#content-form').html("");
-    $('#content-form').empty();
+    $('#content-form').css("display","none");
     mainContent(false);
     // loading(true);
     var dom = document.getElementById("global-form");
@@ -51,7 +49,8 @@ function showForm(url){
     dom.style.width="100%";dom.style.position = "relative";
     setTimeout(function () {
         myAjax(url,function(data){
-            $("#content-form").append(data);
+            $("#content-form").html(data);
+            $('#content-form').css("display","block");
         });
 
         // $('#content-form').load(url);
@@ -59,7 +58,7 @@ function showForm(url){
 }
 
 function myAjax(url, callback) {
-    Pace.restart()
+    // Pace.restart()
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
