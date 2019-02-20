@@ -15,12 +15,13 @@ function loading(show){
 function closeForm(){
     var dom = document.getElementById("global-form");
     dom.style.width = "0px";
-    $('#content-form').html("");
+
     $("#global-form").removeClass("content");
     setTimeout(function () {
         dom.style.position = "absolute";
         mainContent(true);
-    },200);
+        //
+    },500);
 }
 function submitConfiguration(ob) {
     var myObject = $(ob);
@@ -41,6 +42,8 @@ function mainContent(show){
     $(".breadcrumb").css("display",sh);
 }
 function showForm(url){
+    // $('#content-form').html("");
+    $('#content-form').empty();
     mainContent(false);
     // loading(true);
     var dom = document.getElementById("global-form");
@@ -48,7 +51,6 @@ function showForm(url){
     dom.style.width="100%";dom.style.position = "relative";
     setTimeout(function () {
         myAjax(url,function(data){
-            console.log(data);
             $("#content-form").append(data);
         });
 
@@ -57,6 +59,7 @@ function showForm(url){
 }
 
 function myAjax(url, callback) {
+    Pace.restart()
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
