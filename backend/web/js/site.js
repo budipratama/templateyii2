@@ -1,6 +1,7 @@
-$(document).ajaxStart(function () {
-    // Pace.restart()
-});
+// $(document).ajaxStart(function () {
+    //
+// });
+Pace.restart();
 function loading(show){
     if (show === true){
         $(".img-loading").removeClass("hide")
@@ -13,9 +14,9 @@ function loading(show){
 }
 
 function closeForm(){
+    $("#content-form").html();
     var dom = document.getElementById("global-form");
     dom.style.width = "0px";
-
     $("#global-form").removeClass("content");
     setTimeout(function () {
         dom.style.position = "absolute";
@@ -41,7 +42,6 @@ function mainContent(show){
     $(".breadcrumb").css("display",sh);
 }
 function showForm(url){
-    $('#content-form').css("display","none");
     mainContent(false);
     // loading(true);
     var dom = document.getElementById("global-form");
@@ -50,7 +50,6 @@ function showForm(url){
     setTimeout(function () {
         myAjax(url,function(data){
             $("#content-form").html(data);
-            $('#content-form').css("display","block");
         });
 
         // $('#content-form').load(url);
@@ -58,7 +57,7 @@ function showForm(url){
 }
 
 function myAjax(url, callback) {
-    // Pace.restart()
+    Pace.restart()
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function() {
